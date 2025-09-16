@@ -275,36 +275,8 @@ int main() {
     std::cout << "\n=== MySQL Database Connection Test ===" << std::endl;
     MySQLDB db;
     
-    // 注意：这里需要根据实际的MySQL配置进行修改
-    // 为了测试，我们假设有一个本地MySQL服务器
-    
     if (db.connect("localhost", "ikun", "1234", "cache_test")) {
         std::cout << "MySQL connection test passed!" << std::endl;
-        
-        // 创建测试表
-        std::vector<std::vector<std::string>> results;
-        std::string create_table_query = "CREATE TABLE IF NOT EXISTS cache_test (id INT AUTO_INCREMENT PRIMARY KEY, cache_key VARCHAR(255), cache_value TEXT)";
-        if (db.executeQuery(create_table_query, results)) {
-            std::cout << "Table created successfully!" << std::endl;
-        }
-        
-        // 插入一些测试数据
-        std::string insert_query = "INSERT INTO cache_test (cache_key, cache_value) VALUES ('test_key', 'test_value')";
-        if (db.executeQuery(insert_query, results)) {
-            std::cout << "Data inserted successfully!" << std::endl;
-        }
-        
-        // 查询数据
-        std::string select_query = "SELECT * FROM cache_test WHERE cache_key = 'test_key'";
-        if (db.executeQuery(select_query, results)) {
-            std::cout << "Query results:" << std::endl;
-            for (const auto& row : results) {
-                for (const auto& field : row) {
-                    std::cout << field << " ";
-                }
-                std::cout << std::endl;
-            }
-        }
         
         // 3. 测试数据库访问的缓存策略
         std::cout << "\n=== Database Cache Performance Test ===" << std::endl;
@@ -325,7 +297,6 @@ int main() {
     } else {
         std::cout << "MySQL connection test failed. Please check your MySQL configuration." << std::endl;
     }
-    
     
     std::cout << "\nCache system testing completed!" << std::endl;
     
